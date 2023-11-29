@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * utilizes Mecanum drive, linear slide motor, servo-controlled claws, and computer vision.
  */
 @Autonomous
-public class AutonRight extends LinearOpMode {
+public class AutonLeft extends LinearOpMode {
 
     // Declare robot components
     private DcMotor linearSlideMotor;
@@ -54,7 +54,7 @@ public class AutonRight extends LinearOpMode {
 
         if (opModeIsActive()) {
             // pick up purple pixel
-            moveLinearSlide(FIRST_SLIDE_POSITION, -0.3);
+            linearSlideMotor.setTargetPosition(-3500);
 
             // pick up yellow pixel
             // assuming we have a method to pick up the yellow pixel, call it here
@@ -73,7 +73,7 @@ public class AutonRight extends LinearOpMode {
             mecanum.drive(0, 90, 500);
 
             // go straight a lot
-            mecanum.forward(POWER_MEDIUM, 0, 1500);
+            mecanum.forward(10, 0, 1500);
 
             // go left a little
             mecanum.drive(0, -90, 500);
@@ -86,13 +86,13 @@ public class AutonRight extends LinearOpMode {
             mecanum.drive(0, 90, 500);
 
             // go backward a lot
-            mecanum.forward(-POWER_MEDIUM, 180, 2000);
+            mecanum.forward(-10, 180, 2000);
 
             // go left a little
             mecanum.drive(0, -90, 500);
 
             // pick up purple pixel
-            moveLinearSlide(FIRST_SLIDE_POSITION, -0.3);
+            linearSlideMotor.setTargetPosition(-3500);
 
             // pick up yellow pixel
             // assuming we have a method to pick up the yellow pixel, call it here
@@ -105,7 +105,7 @@ public class AutonRight extends LinearOpMode {
             mecanum.drive(0, 90, 500);
 
             // go straight a lot
-            mecanum.forward(POWER_MEDIUM, 0, 1500);
+            mecanum.forward(10, 0, 1500);
 
             // go left a little
             mecanum.drive(0, -90, 500);
