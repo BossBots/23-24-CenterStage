@@ -14,7 +14,7 @@ public class CVTest extends LinearOpMode {
 
     private ComputerVision cv;
     private int recognition;
-    private int[] avgRGB;
+    private int[][] avgRGB;
 
     @Override
     public void runOpMode() throws InterruptedException {
