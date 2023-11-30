@@ -43,14 +43,14 @@ public class AutonLeft extends LinearOpMode {
         claw.setPosition(0.3);   // assuming 0.3 is an open claw
 
         // Initialize computer vision
-        ComputerVision cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
+       // ComputerVision cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
 
         // Wait for the start button to be pressed
         waitForStart();
-        recognition = cv.getRecognition();
+        //recognition = cv.getRecognition();
 
         // Close the claws
-        claw.setPosition(0.3);
+        //claw.setPosition(0.3);
 
         if (opModeIsActive()) {
             // pick up purple pixel
