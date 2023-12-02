@@ -16,6 +16,9 @@ public class AutonRight extends LinearOpMode {
     //private ComputerVision cv;
     private int recognition;
 
+    //provisional variable
+    private int elementPositionRecognition = 0;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -42,6 +45,27 @@ public class AutonRight extends LinearOpMode {
 
         claw.setPosition(0.3);
         if (opModeIsActive()) {
+            //robot is placed on side wall, right next to the center poles
+            // team prop randomly placed on left, center, right, - right in front of robot
+            // PURPLE pixel loaded onto front of robot scoop
+            // YELLOW pixel loaded onto robot claw
+
+            //computer vision initization simulation for now
+            //placement variables
+            //left rec
+            if (elementPositionRecognition == 0){
+                mecanum.yaw(30, -90);
+                mecanum.forward(10, 0, 200);
+            }
+            //center rec code
+            else if (elementPositionRecognition == 10){
+                mecanum.forward(10, 0, 300);
+            }
+            //right rec
+            else{
+                mecanum.yaw(30, 90);
+                mecanum.forward(10, 0, 200);
+            }
             telemetry.addData("recognition", recognition);
             telemetry.update();
             linearSlideMotor.setTargetPosition(-3300);

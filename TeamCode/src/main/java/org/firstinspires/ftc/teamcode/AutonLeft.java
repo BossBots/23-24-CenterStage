@@ -23,6 +23,8 @@ public class AutonLeft extends LinearOpMode {
     // Declare computer vision and recognition variable
     private int recognition;
 
+    private int elementPositionRecognition = 0;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -43,7 +45,8 @@ public class AutonLeft extends LinearOpMode {
 
         // Initialize claw servos
         claw = hardwareMap.get(Servo.class, "clawServo");
-        claw.setPosition(0.3);   // assuming 0.3 is an open claw
+        //claw.setPosition(0.3);   // assuming 0.3 is an open claw
+        //claw might not need to change bc we want it to be flat
 
         // Initialize computer vision
        // ComputerVision cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
@@ -56,10 +59,32 @@ public class AutonLeft extends LinearOpMode {
         //claw.setPosition(0.3);
 
         if (opModeIsActive()) {
+            //robot is placed on side wall, right next to the center poles
+            // team prop randomly placed on left, center, right, - right in front of robot
+            // PURPLE pixel loaded onto front of robot scoop
+            // YELLOW pixel loaded onto robot claw
 
-            // one pixel loaded onto front of robot scoop
-            // one pixel loaded onto robot claw
-            // pick up purple pixel
+            //computer vision initization simulation for now
+            //placement variables
+            //pushes the purple loaded pixel next to whichever place has a team element, and then moves
+            //the robot back to starting position
+            if (elementPositionRecognition == 0){ //left side
+                mecanum.yaw(30, -15);
+                mecanum.forward(10, 0, 200);
+                mecanum.forward(-10, 0, 200);
+                mecanum.yaw(30, 15);
+            }
+            else if (elementPositionRecognition == 10){ //center side
+                mecanum.forward(10, 0, 300);
+                mecanum.forward(-10, 0, 300);
+            }
+            else{                                  //right side
+                mecanum.yaw(30, 15);
+                mecanum.forward(10, 0, 200);
+                mecanum.forward(-10, 0, 200);
+                mecanum.yaw(30, -15);
+            }
+
             linearSlideMotor.setTargetPosition(-3500);
 
             // pick up yellow pixel
