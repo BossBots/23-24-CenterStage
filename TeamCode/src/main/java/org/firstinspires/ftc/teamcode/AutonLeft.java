@@ -13,6 +13,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Autonomous
 public class AutonLeft extends LinearOpMode {
 
+    //30 seconds
+    //positive linear value = linear slide goes up
+
     // Declare robot components
     private DcMotor linearSlideMotor;
     private Mecanum mecanum;
@@ -53,6 +56,9 @@ public class AutonLeft extends LinearOpMode {
         //claw.setPosition(0.3);
 
         if (opModeIsActive()) {
+
+            // one pixel loaded onto front of robot scoop
+            // one pixel loaded onto robot claw
             // pick up purple pixel
             linearSlideMotor.setTargetPosition(-3500);
 

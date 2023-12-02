@@ -11,8 +11,8 @@ public class Drivercontrol extends LinearOpMode {
 
     private DcMotor linearSlideMotor;
     private Mecanum mecanum;
-    //private Servo claw;
-    private Servo joint;
+    private Servo claw;
+    //private Servo joint;
 //    private boolean oldState = false;
     private boolean currentState;
 //    private boolean clawAction = false;
@@ -34,11 +34,9 @@ public class Drivercontrol extends LinearOpMode {
         linearSlideMotor = hardwareMap.get(DcMotor.class, "linearSlide");
         linearSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        //claw = hardwareMap.get(Servo.class, "clawServo");
-        //claw.setPosition(0.4); // 0 is open
+        claw = hardwareMap.get(Servo.class, "clawServo");
+        claw.setPosition(0.4); // 0 is open
 
-        joint = hardwareMap.get(Servo.class, "jointA");
-        joint.setPosition(0.4); // 0 is open
         waitForStart();
 
         while (opModeIsActive()) {
@@ -49,9 +47,9 @@ public class Drivercontrol extends LinearOpMode {
             } else {
                 linearSlideMotor.setPower(1.1 * 0.75*gamepad2.right_stick_y);
             }
-            //claw
 
-            /*currentState= gamepad2.a;
+            //claw
+            currentState= gamepad2.a;
             if(currentState){
                 claw.setPosition(0.1); // open
 
@@ -61,12 +59,15 @@ public class Drivercontrol extends LinearOpMode {
 
             }
             currentState= gamepad2.b;
-            if(currentState){
-                joint.setPosition(0.1); //twist left hypothetically
-            }
-            else{
-                joint.setPosition(0.3); //twist right hypothetically
-            }
+            //not used right now
+
+//            if(currentState){
+//                joint.setPosition(0.1); //twist left hypothetically
+//            }
+//            else{
+//                joint.setPosition(0.3); //twist right hypothetically
+//            }
+
 //            (!oldState && currentState){
 //                clawAction = !clawAction;
 //            }
