@@ -54,17 +54,17 @@ public class AutonRight extends LinearOpMode {
             //placement variables
             //left rec
             if (elementPositionRecognition == 0){
-                mecanum.yaw(30, -90);
-                mecanum.forward(10, 0, 200);
+                mecanum.yaw(0.2, -90);
+                mecanum.forward(0.2, 0, 200);
             }
             //center rec code
             else if (elementPositionRecognition == 10){
-                mecanum.forward(10, 0, 300);
+                mecanum.forward(0.2, 0, 300);
             }
             //right rec
             else{
-                mecanum.yaw(30, 90);
-                mecanum.forward(10, 0, 200);
+                mecanum.yaw(0.2, 90);
+                mecanum.forward(0.2, 0, 200);
             }
             telemetry.addData("recognition", recognition);
             telemetry.update();

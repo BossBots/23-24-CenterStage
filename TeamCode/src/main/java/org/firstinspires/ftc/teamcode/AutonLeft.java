@@ -69,20 +69,20 @@ public class AutonLeft extends LinearOpMode {
             //pushes the purple loaded pixel next to whichever place has a team element, and then moves
             //the robot back to starting position
             if (elementPositionRecognition == 0){ //left side
-                mecanum.yaw(30, -15);
-                mecanum.forward(10, 0, 200);
-                mecanum.forward(-10, 0, 200);
-                mecanum.yaw(30, 15);
+                mecanum.yaw(0.2, -15);
+                mecanum.forward(0.2, 0, 200);
+                mecanum.forward(0.2, 0, 200);
+                mecanum.yaw(0.2, 15);
             }
             else if (elementPositionRecognition == 10){ //center side
-                mecanum.forward(10, 0, 300);
-                mecanum.forward(-10, 0, 300);
+                mecanum.forward(0.2, 0, 300);
+                mecanum.forward(-0.2, 0, 300);
             }
             else{                                  //right side
-                mecanum.yaw(30, 15);
-                mecanum.forward(10, 0, 200);
-                mecanum.forward(-10, 0, 200);
-                mecanum.yaw(30, -15);
+                mecanum.yaw(0.2, 15);
+                mecanum.forward(0.2, 0, 200);
+                mecanum.forward(-0.2, 0, 200);
+                mecanum.yaw(0.2, -15);
             }
 
             linearSlideMotor.setTargetPosition(-3500);
@@ -117,7 +117,7 @@ public class AutonLeft extends LinearOpMode {
             mecanum.drive(0, 90, 500);
 
             // go backward a lot
-            mecanum.forward(-10, 180, 2000);
+            mecanum.forward(-0.2, 180, 2000);
 
             // go left a little
             mecanum.drive(0, -90, 500);
@@ -136,7 +136,7 @@ public class AutonLeft extends LinearOpMode {
             mecanum.drive(0, 90, 500);
 
             // go straight a lot
-            mecanum.forward(10, 0, 1500);
+            mecanum.forward(0.2, 0, 1500);
 
             // go left a little
             mecanum.drive(0, -90, 500);
