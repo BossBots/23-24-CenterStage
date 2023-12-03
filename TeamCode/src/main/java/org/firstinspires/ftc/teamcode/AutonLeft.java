@@ -20,10 +20,12 @@ public class AutonLeft extends LinearOpMode {
     private DcMotor linearSlideMotor;
     private Mecanum mecanum;
     private Servo claw;
+    private double releasePos = 0.4;
+    private double collectPos = 0;
     // Declare computer vision and recognition variable
     private int recognition;
 
-    private int elementPositionRecognition = 0;
+    private int elementPositionRecognition = 1;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -45,7 +47,7 @@ public class AutonLeft extends LinearOpMode {
 
         // Initialize claw servos
         claw = hardwareMap.get(Servo.class, "clawServo");
-        //claw.setPosition(0.3);   // assuming 0.3 is an open claw
+        claw.setPosition(collectPos);   // assuming 0.3 is an open claw
         //claw might not need to change bc we want it to be flat
 
         // Initialize computer vision
@@ -64,82 +66,90 @@ public class AutonLeft extends LinearOpMode {
             // PURPLE pixel loaded onto front of robot scoop
             // YELLOW pixel loaded onto robot claw
 
-            //computer vision initization simulation for now
+            //computer vision initialization simulation for now
             //placement variables
             //pushes the purple loaded pixel next to whichever place has a team element, and then moves
             //the robot back to starting position
-            if (elementPositionRecognition == 0){ //left side
-                mecanum.yaw(0.2, -15);
-                mecanum.forward(0.2, 0, 200);
-                mecanum.forward(0.2, 0, 200);
-                mecanum.yaw(0.2, 15);
+            if (elementPositionRecognition == 1){ //left side
+                mecanum.yaw(-0.1, 15);
+                mecanum.forward(0.2, 0, 400);
+                mecanum.forward(-0.2, 0, 400);
+                mecanum.yaw(0.1, 15);
             }
-            else if (elementPositionRecognition == 10){ //center side
-                mecanum.forward(0.2, 0, 300);
-                mecanum.forward(-0.2, 0, 300);
+            else if (elementPositionRecognition == 3){ //right side
+                mecanum.yaw(0.1, 15);
+                mecanum.forward(0.2, 0, 400);
+                mecanum.forward(-0.2, 0, 400);
+                mecanum.yaw(-0.1, 15);
             }
-            else{                                  //right side
-                mecanum.yaw(0.2, 15);
-                mecanum.forward(0.2, 0, 200);
-                mecanum.forward(-0.2, 0, 200);
-                mecanum.yaw(0.2, -15);
+            else{                                  //center/default
+                mecanum.forward(0.2, 0, 400);
+                mecanum.forward(-0.2, 0, 400);
             }
 
-            linearSlideMotor.setTargetPosition(-3500);
+            //yellow pixel drop off
+            linearSlideMotor.setTargetPosition(-1500);
+            linearSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            linearSlideMotor.setPower(-0.2);
+            while (linearSlideMotor.isBusy()){
+                idle();
+            }
+            linearSlideMotor.setPower(0);
+            linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-            // pick up yellow pixel
-            // assuming we have a method to pick up the yellow pixel, call it here
-            // pickUpPixel() ?
+            // go right a little and forward to drop off purple pixel
+            mecanum.drift(0.1, 0, 100);
 
-            // go right a little
-            mecanum.drive(0, 90, 500);
+            mecanum.forward(0.2, 0, 300);
 
-            // go down a little
-            mecanum.drive(-0.2, 0, 500);
+            // drop yellow pixel
+            claw.setPosition(releasePos);
+            mecanum.forward(-0.1, 0, 200);
+            claw.setPosition(collectPos);
+            linearSlideMotor.setTargetPosition(-100);
+            linearSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            linearSlideMotor.setPower(-0.2);
 
-            // drop purple pixel
-            claw.setPosition(0.1);
-
-            // move right a litlle
-            mecanum.drive(0, 90, 500);
+            // move right a little
+            //mecanum.drive(0, 90, 500);
 
             // go straight a lot
-            mecanum.forward(10, 0, 1500);
+            //mecanum.forward(10, 0, 1500);
 
             // go left a little
-            mecanum.drive(0, -90, 500);
+            //mecanum.drive(0, -90, 500);
 
             // use prop as an indicator and drop yellow pixel onto backdrop
             // assuming we have a method to drop the yellow pixel, call it here
             // dropPixel() ?
 
             // go right a little
-            mecanum.drive(0, 90, 500);
+            //mecanum.drive(0, 90, 200);
 
             // go backward a lot
-            mecanum.forward(-0.2, 180, 2000);
+            //mecanum.forward(-0.2, 180, 200);
 
             // go left a little
-            mecanum.drive(0, -90, 500);
+            //mecanum.drive(0, -90, 500);
 
             // pick up purple pixel
-            linearSlideMotor.setTargetPosition(-3500);
+            //linearSlideMotor.setTargetPosition(-3500);
 
             // pick up yellow pixel
             // assuming we have a method to pick up the yellow pixel, call it here
             // pickUpPixel() ?
 
             // drop purple pixel on the line
-            claw.setPosition(0.1);
+            //claw.setPosition(releasePos);
 
             // go right a little
-            mecanum.drive(0, 90, 500);
+            //mecanum.drive(0, 90, 500);
 
             // go straight a lot
-            mecanum.forward(0.2, 0, 1500);
+            //mecanum.forward(0.2, 0, 1500);
 
             // go left a little
-            mecanum.drive(0, -90, 500);
+            //mecanum.drive(0, -90, 500);
 
             // match and drop yellow pixel on the backdrop
             // assuming you have a method to drop the yellow pixel, call it here
