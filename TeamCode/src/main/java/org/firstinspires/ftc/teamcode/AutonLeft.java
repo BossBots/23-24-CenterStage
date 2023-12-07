@@ -51,11 +51,11 @@ public class AutonLeft extends LinearOpMode {
         //claw might not need to change bc we want it to be flat
 
         // Initialize computer vision
-       // ComputerVision cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
+        ComputerVision cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
 
         // Wait for the start button to be pressed
         waitForStart();
-        //recognition = cv.getRecognition();
+        recognition = cv.getRecognition();
 
         // Close the claws
         //claw.setPosition(0.3);
@@ -114,7 +114,7 @@ public class AutonLeft extends LinearOpMode {
             //mecanum.drive(0, 90, 500);
 
             // go straight a lot
-            //mecanum.forward(10, 0, 1500);
+            //mecanum.forward(0.1, 0, 1500);
 
             // go left a little
             //mecanum.drive(0, -90, 500);
