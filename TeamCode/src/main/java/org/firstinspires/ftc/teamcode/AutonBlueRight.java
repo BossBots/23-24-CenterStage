@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * utilizes Mecanum drive, linear slide motor, servo-controlled claws, and computer vision.
  */
 @Autonomous
-public class AutonLeft extends LinearOpMode {
+public class AutonBlueRight extends LinearOpMode {
 
     //30 seconds
     //positive linear value = linear slide goes up
@@ -87,8 +87,11 @@ public class AutonLeft extends LinearOpMode {
                 mecanum.forward(-0.2, 0, 400);
             }
 
+            //driven to  starting point
             //yellow pixel drop off
-            linearSlideMotor.setTargetPosition(-1500);
+
+            claw.setPosition(collectPos); // collectPos = 0
+            linearSlideMotor.setTargetPosition(1500);
             linearSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             linearSlideMotor.setPower(-0.2);
             while (linearSlideMotor.isBusy()){
@@ -97,18 +100,32 @@ public class AutonLeft extends LinearOpMode {
             linearSlideMotor.setPower(0);
             linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-            // go right a little and forward to drop off purple pixel
-            mecanum.drift(0.1, 0, 100);
+            //go through the middle to get to the board
 
-            mecanum.forward(0.2, 0, 300);
+            mecanum.yaw(0.1, 90); //turn right
+            mecanum.yaw(-0.1, 90); //turn left
+            mecanum.forward(0.1, 0, 200); //go forward into middle
+
+            mecanum.yaw(-0.1, 90); //turn left
+
+            mecanum.forward(0.2, 0, 350); //go through middle
+
+            mecanum.drift(-0.2, 90, 100);
 
             // drop yellow pixel
             claw.setPosition(releasePos);
-            mecanum.forward(-0.1, 0, 200);
-            claw.setPosition(collectPos);
-            linearSlideMotor.setTargetPosition(-100);
-            linearSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            linearSlideMotor.setPower(-0.2);
+            //linear slide goes down
+            linearSlideMotor.setTargetPosition(-1400);
+            //moves to landing spot
+            mecanum.yaw(-0.1, 90);
+            mecanum.forward(0.1, 0, 300);
+
+            // moves robot to loading place for pixel
+//            mecanum.forward(-0.1, 0, 200);
+//            claw.setPosition(collectPos);
+//            linearSlideMotor.setTargetPosition(-100);
+//            linearSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            linearSlideMotor.setPower(-0.2);
 
             // move right a little
             //mecanum.drive(0, 90, 500);
