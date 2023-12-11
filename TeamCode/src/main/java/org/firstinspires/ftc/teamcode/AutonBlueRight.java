@@ -100,6 +100,7 @@ public class AutonBlueRight extends LinearOpMode {
             linearSlideMotor.setPower(0);
             linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+            linearSlideMotor.setTargetPosition(100);
             //go through the middle to get to the board
 
             mecanum.yaw(0.1, 90); //turn right
@@ -112,6 +113,7 @@ public class AutonBlueRight extends LinearOpMode {
 
             mecanum.drift(-0.2, 90, 100);
 
+            linearSlideMotor.setTargetPosition(1500);
             // drop yellow pixel
             claw.setPosition(releasePos);
             //linear slide goes down

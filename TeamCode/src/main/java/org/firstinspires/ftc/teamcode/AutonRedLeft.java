@@ -102,6 +102,7 @@ public class AutonRedLeft extends LinearOpMode {
 
             //go through the middle to get to the board
 
+            linearSlideMotor.setTargetPosition(100);
             mecanum.yaw(-0.1, 90); //turn right
             mecanum.yaw(0.1, 90); //turn left
             mecanum.forward(0.1, 0, 200); //go forward into middle

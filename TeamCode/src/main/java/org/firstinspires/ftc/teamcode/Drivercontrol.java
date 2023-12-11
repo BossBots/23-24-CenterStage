@@ -53,10 +53,10 @@ public class Drivercontrol extends LinearOpMode {
             if(currentState){
                 if(claw.getPosition() == 0.0)
                 {
-                    claw.setPosition(0.5);
+                    claw.setPosition(0.3);
                 }
-                else if (claw.getPosition() == 0.5){
-                    claw.setPosition(1);
+                else if (claw.getPosition() == 0.3){
+                    claw.setPosition(0.6);
                 }
                 else {
                     claw.setPosition(0.0);
