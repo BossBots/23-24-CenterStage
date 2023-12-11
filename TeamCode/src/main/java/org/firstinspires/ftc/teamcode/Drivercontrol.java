@@ -51,19 +51,19 @@ public class Drivercontrol extends LinearOpMode {
             //claw
             currentState= gamepad2.a;
             if(currentState){
-                if(claw.getPosition() == 0.1)
+                if(claw.getPosition() == 0.0)
                 {
-                    claw.setPosition(0.2);
+                    claw.setPosition(0.5);
                 }
-                else if (claw.getPosition() == 0.2){
-                    claw.setPosition(0.4);
+                else if (claw.getPosition() == 0.5){
+                    claw.setPosition(1);
                 }
                 else {
-                    claw.setPosition(0.1);
+                    claw.setPosition(0.0);
                 }
             }
             else{
-                claw.setPosition(0.1); // default???
+                claw.setPosition(0.0); // default???
 
             }
             currentState= gamepad2.b;
