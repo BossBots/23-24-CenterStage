@@ -45,28 +45,22 @@ public class Drivercontrol extends LinearOpMode {
                 linearSlideMotor.setPower(0);
                 linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             } else {
-                linearSlideMotor.setPower(1.1 * 0.75*gamepad2.right_stick_y);
+                linearSlideMotor.setPower(0.25 * 0.75*gamepad2.right_stick_y);
             }
 
             //claw
             currentState= gamepad2.a;
-            if(currentState){
-                if(claw.getPosition() == 0.0)
-                {
-                    claw.setPosition(0.3);
-                }
-                else if (claw.getPosition() == 0.3){
-                    claw.setPosition(0.6);
-                }
-                else {
-                    claw.setPosition(0.0);
-                }
+            if(currentState) {
+                claw.setPosition(0.5);
             }
-            else{
-                claw.setPosition(0.0); // default???
 
+            double clawPosition;
+            while (Math.abs(gamepad2.right_stick_x)>0.1) {
+                clawPosition = claw.getPosition();
+                claw.setPosition(clawPosition+0.01);
             }
-            currentState= gamepad2.b;
+
+//            currentState= gamepad2.b;
             //not used right now
 
 //            if(currentState){
