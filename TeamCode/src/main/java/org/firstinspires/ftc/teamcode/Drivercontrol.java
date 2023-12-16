@@ -20,6 +20,7 @@ public class Drivercontrol extends LinearOpMode {
     private boolean newState;
     private boolean precisionMode = false;
 
+    private double storePix = 0.25;
     @Override
     public void runOpMode() throws InterruptedException {
 

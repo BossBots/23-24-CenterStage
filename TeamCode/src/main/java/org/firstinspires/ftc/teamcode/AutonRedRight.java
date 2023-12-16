@@ -21,7 +21,7 @@ public class AutonRedRight extends LinearOpMode {
     private Mecanum mecanum;
     private Servo claw;
     private double releasePos = 0.4;
-    private double collectPos = 0;
+    private double collectPos = 0.25;
     // Declare computer vision and recognition variable
     private int recognition;
 

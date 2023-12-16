@@ -21,7 +21,7 @@ public class AutonRedLeft extends LinearOpMode {
     private Mecanum mecanum;
     private Servo claw;
     private double releasePos = 0.4;
-    private double collectPos = 0;
+    private double storePix = 0.25;
     // Declare computer vision and recognition variable
     private int recognition;
 
@@ -47,7 +47,7 @@ public class AutonRedLeft extends LinearOpMode {
 
         // Initialize claw servos
         claw = hardwareMap.get(Servo.class, "clawServo");
-        claw.setPosition(collectPos);   // assuming 0.3 is an open claw
+        claw.setPosition(storePix);   // assuming 0.3 is an open claw
         //claw might not need to change bc we want it to be flat
 
         // Initialize computer vision
@@ -90,7 +90,7 @@ public class AutonRedLeft extends LinearOpMode {
             //driven to  starting point
             //yellow pixel drop off
 
-            claw.setPosition(collectPos); // collectPos = 0
+            claw.setPosition(storePix); // collectPos = 0
             linearSlideMotor.setTargetPosition(1500);
             linearSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             linearSlideMotor.setPower(-0.2);
