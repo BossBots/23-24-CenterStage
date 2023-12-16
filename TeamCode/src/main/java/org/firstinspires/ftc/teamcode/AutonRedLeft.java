@@ -74,14 +74,14 @@ public class AutonRedLeft extends LinearOpMode {
             claw.setPosition(storePix);
             if (elementPositionRecognition == 2){ //left side
                 mecanum.yaw(-0.1, 15);
-                mecanum.forward(0.2, 0, 400);
-                mecanum.forward(-0.2, 0, 400);
+                mecanum.forward(0.5, 0, 600);
+                mecanum.forward(-0.5, 0, 600);
                 mecanum.yaw(0.1, 15);
             }
             else if (elementPositionRecognition == 3){ //right side
                 mecanum.yaw(0.1, 15);
-                mecanum.forward(0.2, 0, 400);
-                mecanum.forward(-0.2, 0, 400);
+                mecanum.forward(0.5, 0, 600);
+                mecanum.forward(-0.5, 0, 600);
                 mecanum.yaw(-0.1, 15);
             }
             else{                                  //center/default
