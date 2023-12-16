@@ -20,10 +20,10 @@ public class AutonParkRight extends LinearOpMode {
         );
         waitForStart();
         if (opModeIsActive()) {
-            mecanum.forward(0.5, 0, 1300);
-            mecanum.forward(-0.5, 0, 1300);
+            mecanum.forward(0.5, 0, 1350);
+            mecanum.forward(-0.5, 0, 1350);
 
-            mecanum.drift(0.5, 0, 450);
+            mecanum.drift(0.5, 0, 600);
         }
     }
 }
