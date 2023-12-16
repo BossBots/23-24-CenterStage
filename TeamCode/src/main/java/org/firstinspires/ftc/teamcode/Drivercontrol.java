@@ -49,10 +49,10 @@ public class Drivercontrol extends LinearOpMode {
                 linearSlideMotor.setPower(0.25 * 0.75*gamepad2.right_stick_y);
             }
 
-            //claw
+            //claw 0.25 is level, 0.25 - 0 is dropping off pixel, 0.25> is facing down
             currentState= gamepad2.a;
             if(currentState) {
-                claw.setPosition(0.25);
+                claw.setPosition(0.35);
             }
 
             double clawPosition;
