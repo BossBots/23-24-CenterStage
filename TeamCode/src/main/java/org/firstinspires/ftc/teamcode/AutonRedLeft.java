@@ -38,7 +38,7 @@ public class AutonRedLeft extends LinearOpMode {
                 hardwareMap.get(DcMotor.class, "backRight"),
                 hardwareMap.get(DcMotor.class, "backLeft")
         );
-        mecanum.constantSpeed();
+        mecanum.constantPower();
 
         // Initialize linear slide motor
         linearSlideMotor = hardwareMap.get(DcMotor.class, "linearSlide");
