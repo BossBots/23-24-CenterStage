@@ -23,7 +23,7 @@ public class AutonParkRight extends LinearOpMode {
             mecanum.forward(0.5, 0, 1300);
             mecanum.forward(-0.5, 0, 1300);
 
-            mecanum.drift(-0.5, 0, 450);
+            mecanum.drift(0.5, 0, 450);
         }
     }
 }
