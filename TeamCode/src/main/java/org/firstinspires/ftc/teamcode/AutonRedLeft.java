@@ -21,7 +21,7 @@ public class AutonRedLeft extends LinearOpMode {
     private Mecanum mecanum;
     private Servo claw;
     private double releasePos = 0.4;
-    private double storePix = 0.25;
+    private double storePix = 0.35;
     // Declare computer vision and recognition variable
     private int recognition;
 
@@ -70,6 +70,8 @@ public class AutonRedLeft extends LinearOpMode {
             //placement variables
             //pushes the purple loaded pixel next to whichever place has a team element, and then moves
             //the robot back to starting position
+
+            claw.setPosition(storePix);
             if (elementPositionRecognition == 2){ //left side
                 mecanum.yaw(-0.1, 15);
                 mecanum.forward(0.2, 0, 400);
@@ -83,8 +85,8 @@ public class AutonRedLeft extends LinearOpMode {
                 mecanum.yaw(-0.1, 15);
             }
             else{                                  //center/default
-                mecanum.forward(0.5, 0, 1300);
-                mecanum.forward(-0.5, 0, 1300);
+                mecanum.forward(0.5, 0, 600);
+                mecanum.forward(-0.5, 0, 600);
             }
 
             //driven to  starting point
