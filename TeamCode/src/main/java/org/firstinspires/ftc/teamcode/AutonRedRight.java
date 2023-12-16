@@ -51,7 +51,7 @@ public class AutonRedRight extends LinearOpMode {
         //claw might not need to change bc we want it to be flat
 
         // Initialize computer vision
-        ComputerVision cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
+        ComputerVision cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()), false);
 
         // Wait for the start button to be pressed
         waitForStart();

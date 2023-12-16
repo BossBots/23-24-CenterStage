@@ -12,7 +12,7 @@ public class CVTest extends LinearOpMode {
     private int middleRGBAverage;
     @Override
     public void runOpMode() {
-        cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
+        cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()), true);
         waitForStart();
 
         while (opModeIsActive()) {

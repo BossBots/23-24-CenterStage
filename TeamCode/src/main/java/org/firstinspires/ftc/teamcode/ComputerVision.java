@@ -19,13 +19,22 @@ public class ComputerVision {
     private final double[][] topLeft = new double[fractions][2];
     private final double[][] botRight = new double[fractions][2];
     private int[][] avgRGB = new int[fractions][3];
-    private final int[] RED = {0, 200};
-    private final int[] GREEN = {50, 255};
-    private final int[] BLUE = {0, 200};
+    private int[] RED;
+    private int[] GREEN;
+    private int[] BLUE;
     private int x;
     private int[] longestSeq = new int[2];
 
-    public ComputerVision(int camId) {
+    public ComputerVision(int camId, boolean isBlue) {
+        if (isBlue) {
+            RED = new int[]{0, 255};
+            GREEN = new int[]{50, 255};
+            BLUE = new int[]{0, 255};
+        } else {
+            RED = new int[]{0, 255};
+            GREEN = new int[]{50, 255};
+            BLUE = new int[]{0, 255};
+        }
         for (int i = 0; i < fractions; i++) {
             topLeft[i][0] = 0d / 3d;
             topLeft[i][1] = ((double) i) / ((double) fractions);
