@@ -51,11 +51,11 @@ public class AutonRedLeft extends LinearOpMode {
         //claw might not need to change bc we want it to be flat
 
         // Initialize computer vision
-        ComputerVision cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()), false);
+        //ComputerVision cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()), false);
 
         // Wait for the start button to be pressed
         waitForStart();
-        recognition = cv.getRecognition();
+        //recognition = cv.getRecognition();
 
         // Close the claws
         //claw.setPosition(0.3);
@@ -70,7 +70,7 @@ public class AutonRedLeft extends LinearOpMode {
             //placement variables
             //pushes the purple loaded pixel next to whichever place has a team element, and then moves
             //the robot back to starting position
-            if (elementPositionRecognition == 1){ //left side
+            if (elementPositionRecognition == 2){ //left side
                 mecanum.yaw(-0.1, 15);
                 mecanum.forward(0.2, 0, 400);
                 mecanum.forward(-0.2, 0, 400);
@@ -83,8 +83,8 @@ public class AutonRedLeft extends LinearOpMode {
                 mecanum.yaw(-0.1, 15);
             }
             else{                                  //center/default
-                mecanum.forward(0.2, 0, 400);
-                mecanum.forward(-0.2, 0, 400);
+                mecanum.forward(0.5, 0, 1300);
+                mecanum.forward(-0.5, 0, 1300);
             }
 
             //driven to  starting point

@@ -27,13 +27,13 @@ public class ComputerVision {
 
     public ComputerVision(int camId, boolean isBlue) {
         if (isBlue) {
-            RED = new int[]{0, 255};
-            GREEN = new int[]{50, 255};
-            BLUE = new int[]{0, 255};
+            RED = new int[]{0, 100};
+            GREEN = new int[]{50, 150};
+            BLUE = new int[]{50, 255};
         } else {
-            RED = new int[]{0, 255};
-            GREEN = new int[]{50, 255};
-            BLUE = new int[]{0, 255};
+            RED = new int[]{100, 255};
+            GREEN = new int[]{0, 200};
+            BLUE = new int[]{100, 255};
         }
         for (int i = 0; i < fractions; i++) {
             topLeft[i][0] = 0d / 3d;

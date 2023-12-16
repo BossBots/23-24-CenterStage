@@ -38,7 +38,8 @@ public class AutonBlueLeft extends LinearOpMode {
                 hardwareMap.get(DcMotor.class, "backRight"),
                 hardwareMap.get(DcMotor.class, "backLeft")
         );
-        mecanum.constantSpeed();
+        // mecanum.constantSpeed();
+        mecanum.constantPower();
 
         // Initialize linear slide motor
         linearSlideMotor = hardwareMap.get(DcMotor.class, "linearSlide");
@@ -55,7 +56,7 @@ public class AutonBlueLeft extends LinearOpMode {
 
         // Wait for the start button to be pressed
         waitForStart();
-        recognition = cv.getRecognition();
+        //recognition = cv.getRecognition();
 
         // Close the claws
         //claw.setPosition(0.3);

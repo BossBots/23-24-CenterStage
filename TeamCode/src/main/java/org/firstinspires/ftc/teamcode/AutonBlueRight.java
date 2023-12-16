@@ -51,11 +51,11 @@ public class AutonBlueRight extends LinearOpMode {
         //claw might not need to change bc we want it to be flat
 
         // Initialize computer vision
-        ComputerVision cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()), true);
+        //ComputerVision cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()), true);
 
         // Wait for the start button to be pressed
         waitForStart();
-        recognition = cv.getRecognition();
+        //recognition = cv.getRecognition();
 
         // Close the claws
         //claw.setPosition(0.3);
