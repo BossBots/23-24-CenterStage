@@ -74,11 +74,11 @@ public class Drivercontrol extends LinearOpMode {
 
             while((gamepad2.left_stick_y)>0.1){
                 clawPosition = claw.getPosition();
-                claw.setPosition(clawPosition - 0.001); //negative equals turning counterclockwise for now
+                claw.setPosition(clawPosition - 0.0015); //negative equals turning counterclockwise for now
             }
             while((gamepad2.left_stick_y)<-0.1){
                 clawPosition = claw.getPosition();
-                claw.setPosition(clawPosition + 0.001);
+                claw.setPosition(clawPosition + 0.0015);
             }
 
 //            currentState= gamepad2.b;

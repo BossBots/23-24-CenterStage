@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous
-public class AutonBlueProtoLeft extends LinearOpMode {
+public class AutonParkLeft extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -17,7 +17,7 @@ public class AutonBlueProtoLeft extends LinearOpMode {
                 hardwareMap.get(DcMotor.class, "frontRight"),
                 hardwareMap.get(DcMotor.class, "backRight"),
                 hardwareMap.get(DcMotor.class, "backLeft")
-        );
+                );
         waitForStart();
         if (opModeIsActive()) {
             mecanum.forward(0.5, 0, 1300);
