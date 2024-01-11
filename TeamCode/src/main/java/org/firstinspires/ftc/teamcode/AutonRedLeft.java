@@ -38,6 +38,7 @@ public class AutonRedLeft extends LinearOpMode {
                 hardwareMap.get(DcMotor.class, "backRight"),
                 hardwareMap.get(DcMotor.class, "backLeft")
         );
+        // mecanum.constantSpeed();
         mecanum.constantPower();
 
         // Initialize linear slide motor
@@ -45,13 +46,15 @@ public class AutonRedLeft extends LinearOpMode {
         linearSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         linearSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        linearSlideMotor.setPower(-0.2); // linear slide should be near the ground starting
+
         // Initialize claw servos
         claw = hardwareMap.get(Servo.class, "clawServo");
         claw.setPosition(storePix);   // assuming 0.3 is an open claw
         //claw might not need to change bc we want it to be flat
 
         // Initialize computer vision
-        //ComputerVision cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()), false);
+        ComputerVision cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()), true);
 
         // Wait for the start button to be pressed
         waitForStart();
@@ -70,7 +73,6 @@ public class AutonRedLeft extends LinearOpMode {
             //placement variables
             //pushes the purple loaded pixel next to whichever place has a team element, and then moves
             //the robot back to starting position
-
             claw.setPosition(storePix);
             if (elementPositionRecognition == 2){ //left side
                 mecanum.yaw(-0.1, 15);
@@ -85,43 +87,37 @@ public class AutonRedLeft extends LinearOpMode {
                 mecanum.yaw(-0.1, 15);
             }
             else{                                  //center/default
-                mecanum.forward(0.5, 0, 1300);
-                mecanum.forward(-0.5, 0, 1300);
+                mecanum.forward(0.5, 0, 1300); //move to cv spot
+                mecanum.forward(-0.5, 0, 1300); //move back to original
             }
 
-            //driven to  starting point
-            //yellow pixel drop off
+            // rest of auton
+            mecanum.drift(0.5, 90, 3900);
+            mecanum.forward(0.5, 0, 1300);
+            mecanum.yaw(0.5, 90);
+            mecanum.forward(0.3, 0, 1000);
 
-            claw.setPosition(storePix); // collectPos = 0
-            linearSlideMotor.setTargetPosition(1500);
+            //lift claw and open
             linearSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            linearSlideMotor.setPower(-0.2);
+            linearSlideMotor.setTargetPosition(1500);
+            claw.setPosition(releasePos); //
+            claw.setPosition(storePix);
             while (linearSlideMotor.isBusy()){
                 idle();
             }
             linearSlideMotor.setPower(0);
             linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-            //go through the middle to get to the board
-
-            linearSlideMotor.setTargetPosition(100);
-            mecanum.yaw(-0.1, 90); //turn right
-            mecanum.yaw(0.1, 90); //turn left
-            mecanum.forward(0.1, 0, 200); //go forward into middle
-
-            mecanum.yaw(0.1, 90); //turn left
-
-            mecanum.forward(0.2, 0, 350); //go through middle
-
-            mecanum.drift(0.2, 90, 100);
-
-            // drop yellow pixel
-            claw.setPosition(releasePos);
             //linear slide goes down
-            linearSlideMotor.setTargetPosition(-1400);
-            //moves to landing spot
-            mecanum.yaw(0.1, 90);
-            mecanum.forward(0.1, 0, 300);
+
+            //go to parking
+
+            linearSlideMotor.setTargetPosition(-1500);
+            mecanum.drift(0.5, 90, 100);
+            mecanum.forward(0.5, 0, 100);
+
+
+
 
             // moves robot to loading place for pixel
 //            mecanum.forward(-0.1, 0, 200);
