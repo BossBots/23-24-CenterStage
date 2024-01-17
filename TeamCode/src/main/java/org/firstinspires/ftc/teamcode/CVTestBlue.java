@@ -4,15 +4,15 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp
-public class CVTest extends LinearOpMode {
+public class CVTestBlue extends LinearOpMode {
 
-    private ComputerVision cv;
+    private ComputerVisionBlue cv;
     private int[][] rgb;
 
     private int middleRGBAverage;
     @Override
     public void runOpMode() {
-        cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()), true);
+        cv = new ComputerVisionBlue(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         waitForStart();
 
         while (opModeIsActive()) {
