@@ -1,6 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
+//import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.BHI260IMU;
+import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -19,8 +23,8 @@ imu: built-in BNO055IMU in Rev Expansion Hub
 */
 public class Mecanum {
     // IMU variables
-    private BNO055IMU imu;
-    private BNO055IMU.Parameters imuParameters;
+    private BHI260IMU imu;
+    private BHI260IMU.Parameters imuParameters;
 
     // motion variables
     private long startTime;
@@ -49,23 +53,31 @@ public class Mecanum {
     public int[] getEncoderPos() {return finalEncoderPos;}
 
     // constructor
-    public Mecanum(BNO055IMU i, DcMotor m1, DcMotor m2, DcMotor m3, DcMotor m4) {
+    public Mecanum(BHI260IMU i, DcMotor m1, DcMotor m2, DcMotor m3, DcMotor m4) {
         imu = i;
         frontLeft = m1;
         frontRight = m2;
         backLeft = m3;
         backRight = m4;
 
-        // Create new IMU Parameters object.
-        imuParameters = new BNO055IMU.Parameters();
-        // Use degrees as angle unit.
-        imuParameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        // Express acceleration as m/s^2.
-        imuParameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        // Disable logging.
-        imuParameters.loggingEnabled = false;
-        // Initialize IMU.
-        imu.initialize(imuParameters);
+        /*set the IMU parameters, or use defaults
+
+initialize the IMU*/
+
+
+        IMU.Parameters myIMUparameters;
+        myIMUparameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
+        //Initialize imu + set position
+
+        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
+        RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+
+        RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
+
+        // Now initialize the IMU with this mounting orientation
+        // Note: if you choose two conflicting directions, this initialization will cause a code exception.
+        imu.initialize(new IMU.Parameters(orientationOnRobot));
+
     }
 
     // constant speed
@@ -86,7 +98,7 @@ public class Mecanum {
 
     // helper function to return z-axis orientation as measured by IMU
     public double getHeading() {
-        return imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+        return imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
     }
 
     // forward function for specified power, angle, and interval (reverse is negative power)
