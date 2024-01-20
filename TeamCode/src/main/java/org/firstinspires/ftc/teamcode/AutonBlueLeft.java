@@ -55,7 +55,7 @@ public class AutonBlueLeft extends LinearOpMode {
         linearSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         linearSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        linearSlideMotor.setPower(-0.2); // linear slide should be near the ground starting
+        linearSlideMotor.setPower(0); // linear slide should be near the ground starting
 
         // Initialize claw servos
         claw = hardwareMap.get(Servo.class, "clawServo");
