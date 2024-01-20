@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -32,7 +33,7 @@ public class AutonRedLeft extends LinearOpMode {
 
         // Initialize Mecanum drivetrain
         mecanum = new Mecanum(
-                hardwareMap.get(BNO055IMU.class, "imu"),
+                hardwareMap.get(BHI260IMU.class, "imu"),
                 hardwareMap.get(DcMotor.class, "frontLeft"),
                 hardwareMap.get(DcMotor.class, "frontRight"),
                 hardwareMap.get(DcMotor.class, "backRight"),
