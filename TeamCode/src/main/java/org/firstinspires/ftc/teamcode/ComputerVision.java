@@ -23,17 +23,18 @@ public class ComputerVision {
     private int[] GREEN;
     private int[] BLUE;
     private int x;
+
     private int[] longestSeq = new int[2];
 
     public ComputerVision(int camId, boolean isBlue) {
         if (isBlue) {
-            RED = new int[]{0, 100};
-            GREEN = new int[]{50, 150};
-            BLUE = new int[]{50, 255};
+            RED = new int[]{0, 50};
+            GREEN = new int[]{100, 240};
+            BLUE = new int[]{125, 255};
         } else {
-            RED = new int[]{100, 255};
-            GREEN = new int[]{0, 200};
-            BLUE = new int[]{100, 255};
+            RED = new int[]{180, 255};
+            GREEN = new int[]{100, 180};
+            BLUE = new int[]{180, 255};
         }
         for (int i = 0; i < fractions; i++) {
             topLeft[i][0] = 0d / 3d;
@@ -57,28 +58,14 @@ public class ComputerVision {
     public int getX() {return x;}
 
     public int[] getAnalysis() {
-        /*int output = -1;
-        int max_red = 0;
-        for (int i = 0; i < fractions; i++) {
-            if (avgRGB[i][1] < MAX_GREEN * avgRGB[i][0] && avgRGB[i][1] > MIN_GREEN * avgRGB[i][0] && avgRGB[i][2] < MAX_BLUE * avgRGB[i][0] && (output == -1 || avgRGB[output][0] <= avgRGB[i][0])) {
-                output = i;
-            }
-            if (avgRGB[i][0] > max_red) {
-                output = i;
-                max_red = avgRGB[i][0];
-            }
-        }
-        return output;
-        */
-        x+=1;
+        x += 1;
         longestSeq = new int[2];
         boolean[] seq = new boolean[fractions];
         for (int i = 0; i < fractions; i++) {
             seq[i] = (
                     (RED[0] < avgRGB[i][0] && avgRGB[i][0] < RED[1]) &&
                             (GREEN[0] < avgRGB[i][1] && avgRGB[i][1] < GREEN[1]) &&
-                            (BLUE[0] < avgRGB[i][2] && avgRGB[i][2] < BLUE[1]) &&
-                            (avgRGB[i][1] * 0.9 > avgRGB[i][0] && avgRGB[i][1] * 0.9 > avgRGB[i][2])
+                            (BLUE[0] < avgRGB[i][2] && avgRGB[i][2] < BLUE[1])
             );
         }
         int[] currentSeq = new int[2];
@@ -89,25 +76,25 @@ public class ComputerVision {
                     currentSeq[1] = i;
                 } else {
                     currentSeq[0] = i;
+                    currentSeq[1] = i; // Handle single-length sequences
                 }
                 prevTrue = true;
             } else {
                 if (prevTrue) {
                     prevTrue = false;
-                    currentSeq[1] = i;
-                }
-                if (currentSeq[1] - currentSeq[0] > longestSeq[1] - longestSeq[0]) {
-                    longestSeq[0] = currentSeq[0];
-                    longestSeq[1] = currentSeq[1];
+                    if (currentSeq[1] - currentSeq[0] > longestSeq[1] - longestSeq[0]) {
+                        longestSeq[0] = currentSeq[0];
+                        longestSeq[1] = currentSeq[1];
+                    }
+                    currentSeq = new int[2]; // Reset currentSeq after processing a sequence
                 }
             }
         }
         if (prevTrue) {
-            currentSeq[1] = fractions;
-        }
-        if (currentSeq[1] - currentSeq[0] > longestSeq[1] - longestSeq[0]) {
-            longestSeq[0] = currentSeq[0];
-            longestSeq[1] = currentSeq[1];
+            if (currentSeq[1] - currentSeq[0] > longestSeq[1] - longestSeq[0]) {
+                longestSeq[0] = currentSeq[0];
+                longestSeq[1] = currentSeq[1];
+            }
         }
         return longestSeq;
     }
