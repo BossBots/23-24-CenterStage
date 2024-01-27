@@ -14,6 +14,8 @@ public class Drivercontrol extends LinearOpMode {
     private Mecanum mecanum;
     private Servo claw;
 
+    private Servo openClaw;
+
     private Servo launcher;
     //private Servo joint;
 //    private boolean oldState = false;
@@ -42,6 +44,8 @@ public class Drivercontrol extends LinearOpMode {
         claw = hardwareMap.get(Servo.class, "angleServo");
         claw.setPosition(0.4); // 0 is open
 
+        openClaw = hardwareMap.get(Servo.class, "clawServo");
+
         launcher = hardwareMap.get(Servo.class, "launcher");
 
         waitForStart();
@@ -59,6 +63,14 @@ public class Drivercontrol extends LinearOpMode {
             currentState= gamepad2.a;
             if(currentState) {
                 claw.setPosition(0.35);
+            }
+
+            currentState = gamepad2.x;
+            if(currentState) {
+                openClaw.setPosition(0.35);
+            }
+            else{
+                openClaw.setPosition(0);
             }
 
             droneState = gamepad2.b;

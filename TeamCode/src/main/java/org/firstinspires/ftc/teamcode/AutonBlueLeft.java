@@ -24,6 +24,8 @@ public class AutonBlueLeft extends LinearOpMode {
     private DcMotor linearSlideMotor;
     private Mecanum mecanum;
     private Servo claw;
+
+    private Servo openClaw;
     private double releasePos = 0.4;
     private double storePix = 0.35;
     // Declare computer vision and recognition variable
@@ -59,6 +61,8 @@ public class AutonBlueLeft extends LinearOpMode {
 
         // Initialize claw servos
         claw = hardwareMap.get(Servo.class, "angleServo");
+
+        openClaw = hardwareMap.get(Servo.class, "clawServo");
         claw.setPosition(storePix);   // assuming 0.3 is an open claw
         //claw might not need to change bc we want it to be flat
 

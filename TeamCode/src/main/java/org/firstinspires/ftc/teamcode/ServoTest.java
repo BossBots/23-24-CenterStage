@@ -10,7 +10,7 @@ public class ServoTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialize claw servos
-        claw = hardwareMap.get(Servo.class, "clawServo");
+        claw = hardwareMap.get(Servo.class, "angleClaw");
 
         // Wait for the start button to be pressed
         waitForStart();
