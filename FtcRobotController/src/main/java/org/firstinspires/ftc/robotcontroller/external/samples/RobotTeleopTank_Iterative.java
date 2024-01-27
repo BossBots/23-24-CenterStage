@@ -42,7 +42,7 @@ import com.qualcomm.robotcore.util.Range;
  *
  * In this mode, the left and right joysticks control the left and right motors respectively.
  * Pushing a joystick forward will make the attached motor drive forward.
- * It raises and lowers the claw using the Gamepad Y and A buttons respectively.
+ * It raises and lowers the clawAngleusing the Gamepad Y and A buttons respectively.
  * It also opens and closes the claws slowly using the left and right Bumper buttons.
  *
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.

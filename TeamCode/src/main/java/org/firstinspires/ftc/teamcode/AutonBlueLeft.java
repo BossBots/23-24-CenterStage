@@ -23,11 +23,12 @@ public class AutonBlueLeft extends LinearOpMode {
     // Declare robot components
     private DcMotor linearSlideMotor;
     private Mecanum mecanum;
-    private Servo claw;
+    private Servo clawAngle;
 
+    private double levelAngle = 0;
     private Servo openClaw;
-    private double releasePos = 0.4;
-    private double storePix = 0.35;
+    private double releasePos = 0.875;
+    private double storePix = 0.808;
     // Declare computer vision and recognition variable
     private int recognition;
 
@@ -59,12 +60,11 @@ public class AutonBlueLeft extends LinearOpMode {
 
         linearSlideMotor.setPower(0); // linear slide should be near the ground starting
 
-        // Initialize claw servos
-        claw = hardwareMap.get(Servo.class, "angleServo");
+        // Initialize clawAngleservos
+        clawAngle = hardwareMap.get(Servo.class, "angleServo");
 
         openClaw = hardwareMap.get(Servo.class, "clawServo");
-        claw.setPosition(storePix);   // assuming 0.3 is an open claw
-        //claw might not need to change bc we want it to be flat
+        clawAngle.setPosition(releasePos);
 
         // Initialize computer vision
         ComputerVision cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()), true);
@@ -86,7 +86,7 @@ public class AutonBlueLeft extends LinearOpMode {
             //placement variables
             //pushes the purple loaded pixel next to whichever place has a team element, and then moves
             //the robot back to starting position
-            claw.setPosition(storePix);
+            clawAngle.setPosition(storePix);
             if (elementPositionRecognition == 2){ //left side
                 mecanum.yaw(-0.1, 15);
                 mecanum.forward(0.5, 0, 1300);
@@ -110,11 +110,11 @@ public class AutonBlueLeft extends LinearOpMode {
             mecanum.yaw(-0.5, 90);
             mecanum.forward(0.3, 0, 1000);
 
-            //lift claw and open
+            //lift clawAngle and open
             linearSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             linearSlideMotor.setTargetPosition(1500);
-            claw.setPosition(releasePos); //
-            claw.setPosition(storePix);
+            clawAngle.setPosition(0.4);
+            openClaw.setPosition(releasePos); //
             while (linearSlideMotor.isBusy()){
                 idle();
             }

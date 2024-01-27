@@ -12,7 +12,7 @@ public class Drivercontrol extends LinearOpMode {
 
     private DcMotor linearSlideMotor;
     private Mecanum mecanum;
-    private Servo claw;
+    private Servo clawAngle;
 
     private Servo openClaw;
 
@@ -26,7 +26,10 @@ public class Drivercontrol extends LinearOpMode {
     private boolean newState;
     private boolean precisionMode = false;
 
-    private double storePix = 0.25;
+    private double abortAngle = 0.67;
+    private double levelAngle = 0.61222222;
+
+    //private double storePix = 0.25;
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -41,10 +44,11 @@ public class Drivercontrol extends LinearOpMode {
         linearSlideMotor = hardwareMap.get(DcMotor.class, "linearSlide");
         linearSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        claw = hardwareMap.get(Servo.class, "angleServo");
-        claw.setPosition(0.4); // 0 is open
+        clawAngle = hardwareMap.get(Servo.class, "angleServo");
+        clawAngle.setPosition(levelAngle); // 0 is open
 
         openClaw = hardwareMap.get(Servo.class, "clawServo");
+        openClaw.setPosition(0.875);
 
         launcher = hardwareMap.get(Servo.class, "launcher");
 
@@ -62,16 +66,18 @@ public class Drivercontrol extends LinearOpMode {
             //claw 0.25 is level, 0.25 - 0 is dropping off pixel, 0.25> is facing down
             currentState= gamepad2.a;
             if(currentState) {
-                claw.setPosition(0.35);
+                clawAngle.setPosition(0.35);
             }
 
             currentState = gamepad2.dpad_down;
             if(currentState) {
-                openClaw.setPosition(0);
+                if(openClaw.getPosition() != 0.808)
+                    {openClaw.setPosition(0.808);}
             }
             currentState = gamepad2.dpad_up;
             if(currentState){
-                openClaw.setPosition(0.35);
+                if(openClaw.getPosition() != 0.875)
+                    {openClaw.setPosition(0.875);}
             }
 
 
@@ -80,7 +86,7 @@ public class Drivercontrol extends LinearOpMode {
                 launcher.setPosition(0.5);
             }
 
-            double clawPosition;
+            double currentAngle;
 //            while (Math.abs(gamepad2.right_stick_x)>0.1) {
 //                clawPosition = claw.getPosition();
 //                claw.setPosition(clawPosition-0.001);
@@ -88,12 +94,15 @@ public class Drivercontrol extends LinearOpMode {
 //            }
 
             while((gamepad2.left_stick_y)>0.1){
-                clawPosition = claw.getPosition();
-                claw.setPosition(clawPosition - 0.0015); //negative equals turning counterclockwise for now
-            }
+                currentAngle = clawAngle.getPosition();
+                clawAngle.setPosition(currentAngle + 0.00025);
+                }
             while((gamepad2.left_stick_y)<-0.1){
-                clawPosition = claw.getPosition();
-                claw.setPosition(clawPosition + 0.0015);
+                currentAngle = clawAngle.getPosition();
+                if (currentAngle <= abortAngle){
+                    clawAngle.setPosition(currentAngle - 0.00025); //negative equals turning counterclockwise for now
+                }
+
             }
 
 //            currentState= gamepad2.b;
@@ -134,6 +143,7 @@ public class Drivercontrol extends LinearOpMode {
             }
 
             telemetry.addData("precision mode", precisionMode);
+            telemetry.addData("current angle", clawAngle.getPosition());
             telemetry.update();
         }
     }
