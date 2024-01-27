@@ -65,13 +65,15 @@ public class Drivercontrol extends LinearOpMode {
                 claw.setPosition(0.35);
             }
 
-            currentState = gamepad2.x;
+            currentState = gamepad2.dpad_down;
             if(currentState) {
-                openClaw.setPosition(0.35);
-            }
-            else{
                 openClaw.setPosition(0);
             }
+            currentState = gamepad2.dpad_up;
+            if(currentState){
+                openClaw.setPosition(0.35);
+            }
+
 
             droneState = gamepad2.b;
             if(droneState){
