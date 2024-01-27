@@ -50,7 +50,7 @@ public class AutonRedRight extends LinearOpMode {
         linearSlideMotor.setPower(-0.2); // linear slide should be near the ground starting
 
         // Initialize claw servos
-        claw = hardwareMap.get(Servo.class, "clawServo");
+        claw = hardwareMap.get(Servo.class, "angleServo");
         claw.setPosition(storePix);   // assuming 0.3 is an open claw
         //claw might not need to change bc we want it to be flat
 

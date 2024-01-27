@@ -39,7 +39,7 @@ public class Drivercontrol extends LinearOpMode {
         linearSlideMotor = hardwareMap.get(DcMotor.class, "linearSlide");
         linearSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        claw = hardwareMap.get(Servo.class, "clawServo");
+        claw = hardwareMap.get(Servo.class, "angleServo");
         claw.setPosition(0.4); // 0 is open
 
         launcher = hardwareMap.get(Servo.class, "launcher");
