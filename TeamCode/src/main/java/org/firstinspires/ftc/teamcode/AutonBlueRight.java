@@ -25,8 +25,8 @@ public class AutonBlueRight extends LinearOpMode {
     private Mecanum mecanum;
     private Servo clawAngle;
 
-    private double levelAngle = 0;
-
+    private double levelAngle = 0.6122222;
+    private double depositAngle = 0.8;
     private Servo openClaw;
     private double releasePos = 0.875;
     private double storePix = 0.808;
@@ -63,9 +63,10 @@ public class AutonBlueRight extends LinearOpMode {
 
         // Initialize clawAngleservos
         clawAngle = hardwareMap.get(Servo.class, "angleServo");
+        clawAngle.setPosition(levelAngle);
 
         openClaw = hardwareMap.get(Servo.class, "clawServo");
-        clawAngle.setPosition(releasePos);
+        openClaw.setPosition(releasePos);
 
         // Initialize computer vision
         ComputerVision cv = new ComputerVision(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()), true);
@@ -114,8 +115,8 @@ public class AutonBlueRight extends LinearOpMode {
             //lift clawAngleand open
             linearSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             linearSlideMotor.setTargetPosition(1500);
+            clawAngle.setPosition(depositAngle);
             openClaw.setPosition(releasePos); //
-            openClaw.setPosition(storePix);
             while (linearSlideMotor.isBusy()){
                 idle();
             }

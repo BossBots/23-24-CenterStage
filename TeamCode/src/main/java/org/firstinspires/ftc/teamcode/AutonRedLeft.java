@@ -2,6 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.hardware.bosch.BNO055IMU;
+
+import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -21,8 +25,9 @@ public class AutonRedLeft extends LinearOpMode {
     private DcMotor linearSlideMotor;
     private Mecanum mecanum;
     private Servo clawAngle;
-    private double levelAngle = 0;
-
+    private double levelAngle = 0.6122222;
+    private double depositAngle = 0.8;
+    private Servo openClaw;
     private double releasePos = 0.875;
     private double storePix = 0.808;
     // Declare computer vision and recognition variable
@@ -32,6 +37,10 @@ public class AutonRedLeft extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+        //intialize imu
+        IMU imu;
+        imu = hardwareMap.get(IMU.class, "imu");
 
         // Initialize Mecanum drivetrain
         mecanum = new Mecanum(
@@ -49,11 +58,15 @@ public class AutonRedLeft extends LinearOpMode {
         linearSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         linearSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        linearSlideMotor.setPower(-0.2); // linear slide should be near the ground starting
+        linearSlideMotor.setPower(0); // linear slide should be near the ground starting
 
         // Initialize clawAngleservos
-        clawAngle= hardwareMap.get(Servo.class, "angleServo");
-        clawAngle.setPosition(storePix);   // assuming 0.3 is an open claw
+        clawAngle = hardwareMap.get(Servo.class, "angleServo");
+        clawAngle.setPosition(levelAngle);
+
+        openClaw = hardwareMap.get(Servo.class, "clawServo");
+        openClaw.setPosition(releasePos);
+
         //claw might not need to change bc we want it to be flat
 
         // Initialize computer vision
@@ -103,8 +116,10 @@ public class AutonRedLeft extends LinearOpMode {
             //lift clawAngleand open
             linearSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             linearSlideMotor.setTargetPosition(1500);
-            clawAngle.setPosition(releasePos); //
-            clawAngle.setPosition(storePix);
+            clawAngle.setPosition(depositAngle);
+            openClaw.setPosition(releasePos);
+
+
             while (linearSlideMotor.isBusy()){
                 idle();
             }
