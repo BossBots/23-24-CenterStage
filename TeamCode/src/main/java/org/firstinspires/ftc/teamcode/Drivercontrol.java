@@ -48,7 +48,7 @@ public class Drivercontrol extends LinearOpMode {
         clawAngle.setPosition(levelAngle); // 0 is open
 
         openClaw = hardwareMap.get(Servo.class, "clawServo");
-        openClaw.setPosition(0.82);
+        openClaw.setPosition(0.04);
 
         launcher = hardwareMap.get(Servo.class, "launcher");
 
@@ -69,15 +69,17 @@ public class Drivercontrol extends LinearOpMode {
 //                clawAngle.setPosition(0.35);
 //            }
 
+            //open
             currentState = gamepad2.dpad_down;
             if(currentState) {
-                if(openClaw.getPosition() != 0.82)
-                    {openClaw.setPosition(0.808);}
+                if(openClaw.getPosition() != 0.1)
+                    {openClaw.setPosition(0.1);}
             }
+            //close
             currentState = gamepad2.dpad_up;
             if(currentState){
-                if(openClaw.getPosition() != 0.86)
-                    {openClaw.setPosition(0.875);}
+                if(openClaw.getPosition() != 0.04)
+                    {openClaw.setPosition(0.04);}
             }
 
 
