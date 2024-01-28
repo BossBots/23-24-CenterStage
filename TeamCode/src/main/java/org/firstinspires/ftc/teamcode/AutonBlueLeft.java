@@ -29,8 +29,8 @@ public class AutonBlueLeft extends LinearOpMode {
     private double levelAngle = 0.53;
     private double depositAngle = 0.8;
     private Servo openClaw;
-    private double releasePos = 0.875;
-    private double storePix = 0.808;
+    private double releasePos = 0.1;
+    private double storePix = 0.04;
     // Declare computer vision and recognition variable
     private int recognition;
 
@@ -92,30 +92,30 @@ public class AutonBlueLeft extends LinearOpMode {
             //the robot back to starting position
             linearSlideMotor.setPower(0.1);
             clawAngle.setPosition(storePix);
-            if (elementPositionRecognition == 2){ //left side
-                mecanum.yaw(-0.1, 15);
-                mecanum.forward(0.5, 0, 1300);
-                openClaw.setPosition(releasePos);
-                linearSlideMotor.setTargetPosition(300);
-
-                mecanum.forward(-0.5, 0, 1300);
-                mecanum.yaw(0.1, 15);
-            }
-            else if (elementPositionRecognition == 3){ //right side
-                mecanum.yaw(0.1, 15);
-                mecanum.forward(0.5, 0, 1300);
-                openClaw.setPosition(releasePos);
-                linearSlideMotor.setTargetPosition(300);
-
-                mecanum.forward(-0.5, 0, 1300);
-                mecanum.yaw(-0.1, 15);
-            }
-            else{                                  //center/default
-                mecanum.forward(0.5, 0, 1300); //move to cv spot
-                openClaw.setPosition(releasePos);
-                linearSlideMotor.setTargetPosition(300);
-                mecanum.forward(-0.5, 0, 1300); //move back to original
-            }
+//            if (elementPositionRecognition == 2){ //left side
+//                mecanum.yaw(-0.1, 15);
+//                mecanum.forward(0.5, 0, 1300);
+//                openClaw.setPosition(releasePos);
+//                linearSlideMotor.setTargetPosition(300);
+//
+//                mecanum.forward(-0.5, 0, 1300);
+//                mecanum.yaw(0.1, 15);
+//            }
+//            else if (elementPositionRecognition == 3){ //right side
+//                mecanum.yaw(0.1, 15);
+//                mecanum.forward(0.5, 0, 1300);
+//                openClaw.setPosition(releasePos);
+//                linearSlideMotor.setTargetPosition(300);
+//
+//                mecanum.forward(-0.5, 0, 1300);
+//                mecanum.yaw(-0.1, 15);
+//            }
+//            else{                                  //center/default
+//                mecanum.forward(0.5, 0, 1370); //move to cv spot
+//                openClaw.setPosition(releasePos);
+//                linearSlideMotor.setTargetPosition(300);
+//                mecanum.forward(-0.5, 0, 1300); //move back to original
+//            }
 
 //            // rest of auton
 //            mecanum.drift(-0.5, 90, 1300);

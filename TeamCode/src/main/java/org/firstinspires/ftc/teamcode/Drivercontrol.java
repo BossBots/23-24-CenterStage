@@ -51,6 +51,7 @@ public class Drivercontrol extends LinearOpMode {
         openClaw.setPosition(0.04);
 
         launcher = hardwareMap.get(Servo.class, "launcher");
+        launcher.setPosition(0.4);
 
         waitForStart();
 
@@ -85,7 +86,7 @@ public class Drivercontrol extends LinearOpMode {
 
             droneState = gamepad2.b;
             if(droneState){
-                launcher.setPosition(0.8);
+                launcher.setPosition(0.95);
             }
 
             double currentAngle;
