@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+//closer to board
 
 import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -25,7 +26,7 @@ public class AutonBlueLeft extends LinearOpMode {
     private Mecanum mecanum;
     private Servo clawAngle;
 
-    private double levelAngle = 0.6122222;
+    private double levelAngle = 0.53;
     private double depositAngle = 0.8;
     private Servo openClaw;
     private double releasePos = 0.875;
@@ -56,10 +57,11 @@ public class AutonBlueLeft extends LinearOpMode {
 
         // Initialize linear slide motor
         linearSlideMotor = hardwareMap.get(DcMotor.class, "linearSlide");
-        linearSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        linearSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         linearSlideMotor.setPower(0); // linear slide should be near the ground starting
+        linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        linearSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        linearSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
         // Initialize clawAngleservos
         clawAngle = hardwareMap.get(Servo.class, "angleServo");
@@ -88,48 +90,57 @@ public class AutonBlueLeft extends LinearOpMode {
             //placement variables
             //pushes the purple loaded pixel next to whichever place has a team element, and then moves
             //the robot back to starting position
+            linearSlideMotor.setPower(0.1);
             clawAngle.setPosition(storePix);
             if (elementPositionRecognition == 2){ //left side
                 mecanum.yaw(-0.1, 15);
                 mecanum.forward(0.5, 0, 1300);
+                openClaw.setPosition(releasePos);
+                linearSlideMotor.setTargetPosition(300);
+
                 mecanum.forward(-0.5, 0, 1300);
                 mecanum.yaw(0.1, 15);
             }
             else if (elementPositionRecognition == 3){ //right side
                 mecanum.yaw(0.1, 15);
                 mecanum.forward(0.5, 0, 1300);
+                openClaw.setPosition(releasePos);
+                linearSlideMotor.setTargetPosition(300);
+
                 mecanum.forward(-0.5, 0, 1300);
                 mecanum.yaw(-0.1, 15);
             }
             else{                                  //center/default
                 mecanum.forward(0.5, 0, 1300); //move to cv spot
+                openClaw.setPosition(releasePos);
+                linearSlideMotor.setTargetPosition(300);
                 mecanum.forward(-0.5, 0, 1300); //move back to original
             }
 
-            // rest of auton
-            mecanum.drift(-0.5, 90, 1300);
-            mecanum.forward(0.5, 0, 1300);
-            mecanum.yaw(-0.5, 90);
-            mecanum.forward(0.3, 0, 1000);
-
-            //lift clawAngle and open
-            linearSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            linearSlideMotor.setTargetPosition(1500);
-            clawAngle.setPosition(depositAngle);
-            openClaw.setPosition(releasePos); //
-            while (linearSlideMotor.isBusy()){
-                idle();
-            }
-            linearSlideMotor.setPower(0);
-            linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-            //linear slide goes down
-
-            //go to parking
-
-            linearSlideMotor.setTargetPosition(-1500);
-            mecanum.drift(-0.5, 90, 100);
-            mecanum.forward(0.5, 0, 100);
+//            // rest of auton
+//            mecanum.drift(-0.5, 90, 1300);
+//            mecanum.forward(0.5, 0, 1300);
+//            mecanum.yaw(-0.5, 90);
+//            mecanum.forward(0.3, 0, 1000);
+//
+//            //lift clawAngle and open
+//            linearSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            linearSlideMotor.setTargetPosition(1500);
+//            clawAngle.setPosition(depositAngle);
+//            openClaw.setPosition(releasePos); //
+//            while (linearSlideMotor.isBusy()){
+//                idle();
+//            }
+//            linearSlideMotor.setPower(0);
+//            linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//
+//            //linear slide goes down
+//
+//            //go to parking
+//
+//            linearSlideMotor.setTargetPosition(-1500);
+//            mecanum.drift(-0.5, 90, 100);
+//            mecanum.forward(0.5, 0, 100);
 
 
 

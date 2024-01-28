@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+//closer to board
 
 import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -26,7 +27,7 @@ public class AutonRedRight extends LinearOpMode {
     private Mecanum mecanum;
     private Servo clawAngle;
 
-    private double levelAngle = 0.6122222;
+    private double levelAngle = 0.53;
     private double depositAngle = 0.8;
     private Servo openClaw;
     private double releasePos = 0.875;
@@ -93,17 +94,26 @@ public class AutonRedRight extends LinearOpMode {
             if (elementPositionRecognition == 2){ //left side
                 mecanum.yaw(-0.1, 15);
                 mecanum.forward(0.5, 0, 1300);
+                openClaw.setPosition(releasePos);
+                linearSlideMotor.setTargetPosition(300);
+
                 mecanum.forward(-0.5, 0, 1300);
                 mecanum.yaw(0.1, 15);
             }
             else if (elementPositionRecognition == 3){ //right side
                 mecanum.yaw(0.1, 15);
                 mecanum.forward(0.5, 0, 1300);
+                openClaw.setPosition(releasePos);
+                linearSlideMotor.setTargetPosition(300);
+
                 mecanum.forward(-0.5, 0, 1300);
                 mecanum.yaw(-0.1, 15);
             }
             else{                                  //center/default
                 mecanum.forward(0.5, 0, 1300); //move to cv spot
+                openClaw.setPosition(releasePos);
+                linearSlideMotor.setTargetPosition(300);
+
                 mecanum.forward(-0.5, 0, 1300); //move back to original
             }
 

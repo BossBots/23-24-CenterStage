@@ -8,9 +8,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp
-public class Drivercontrol extends LinearOpMode {
+public class DriverControlWString extends LinearOpMode {
 
     private DcMotor linearSlideMotor;
+
+    private DcMotor leftString;
+
+    private DcMotor rightString;
     private Mecanum mecanum;
     private Servo clawAngle;
 
@@ -21,13 +25,13 @@ public class Drivercontrol extends LinearOpMode {
 //    private boolean oldState = false;
     private boolean currentState;
     private boolean droneState;
-//    private boolean clawAction = false;
+    //    private boolean clawAction = false;
     private boolean oldState = false;
     private boolean newState;
     private boolean precisionMode = false;
 
-    private double abortAngle = 0.75;
-    private double levelAngle = 0.7272;
+    private double abortAngle = 0.60;
+    private double levelAngle = 0.53;
 
     //private double storePix = 0.25;
     @Override
@@ -44,46 +48,97 @@ public class Drivercontrol extends LinearOpMode {
         linearSlideMotor = hardwareMap.get(DcMotor.class, "linearSlide");
         linearSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        leftString = hardwareMap.get(DcMotor.class, "leftString");
+        rightString = hardwareMap.get(DcMotor.class, "rightString");
+
         clawAngle = hardwareMap.get(Servo.class, "angleServo");
-        clawAngle.setPosition(levelAngle); // 0 is open
+        clawAngle.setPosition(levelAngle);
 
         openClaw = hardwareMap.get(Servo.class, "clawServo");
-        openClaw.setPosition(0.82);
+        openClaw.setPosition(0.875);
 
         launcher = hardwareMap.get(Servo.class, "launcher");
 
         waitForStart();
 
         while (opModeIsActive()) {
-            //linear  slide controls
+            //linear  slide controls, moves linear slide along with the two motors (normal)
             if (Math.abs(gamepad2.right_stick_y)<0.1) {
                 linearSlideMotor.setPower(0);
                 linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                leftString.setPower(0);
+                leftString.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                rightString.setPower(0);
+                rightString.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             } else {
                 linearSlideMotor.setPower(0.25 * 0.75*gamepad2.right_stick_y);
+                leftString.setPower(0.25*0.75*gamepad2.right_stick_y);
+                rightString.setPower(-0.25*0.75*gamepad2.right_stick_y);
             }
 
-            //claw 0.25 is level, 0.25 - 0 is dropping off pixel, 0.25> is facing down
-//            currentState= gamepad2.a;
-//            if(currentState) {
-//                clawAngle.setPosition(0.35);
-//            }
+            //for endgame, press x on gamepad 2 to disable the linear slide, and keep the two motors working
+            currentState = gamepad2.x;
+            if(currentState){
+                linearSlideMotor.setPower(0);
+                linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                if (Math.abs(gamepad2.right_stick_y)<0.1) {
+                    linearSlideMotor.setPower(0);
+                    linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                    leftString.setPower(0);
+                    leftString.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                    rightString.setPower(0);
+                    rightString.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                } else {
+                    linearSlideMotor.setPower(0);
+                    linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                    leftString.setPower(0.25*0.75*gamepad2.right_stick_y);
+                    rightString.setPower(-0.25*0.75*gamepad2.right_stick_y);
+                }
+            }
+            //toggles which motors are disabled.
+            //  If the linear slide is previously disabled and the string motors are previously enabled, this will enable the linear slide
+            //      and disable the two string motors.
+
+            //  If the linear slide is previously enabled and the string motors are previously disabled, this will disable the linear slide
+            //      and enable the two string motors.
+            currentState = gamepad2.y;
+            if (currentState){
+                if((leftString.getPower() == 0.0) && (rightString.getPower() == 0.0)){
+                    if (Math.abs(gamepad2.right_stick_y)<0.1) {
+                        leftString.setPower(0.25*0.75*gamepad2.right_stick_y);
+                        rightString.setPower(-0.25*0.75*gamepad2.right_stick_y);
+
+                    }
+                }
+                else{
+                    leftString.setPower(0);
+                    leftString.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                    rightString.setPower(0);
+                    rightString.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                }
+            }
+
+            //claw 0.25 is level, 0.25 0 is dropping off pixel, 0.25> is facing down
+            currentState= gamepad2.a;
+            if(currentState) {
+                clawAngle.setPosition(0.35);
+            }
 
             currentState = gamepad2.dpad_down;
             if(currentState) {
-                if(openClaw.getPosition() != 0.82)
-                    {openClaw.setPosition(0.808);}
+                if(openClaw.getPosition() != 0.808)
+                {openClaw.setPosition(0.808);}
             }
             currentState = gamepad2.dpad_up;
             if(currentState){
-                if(openClaw.getPosition() != 0.86)
-                    {openClaw.setPosition(0.875);}
+                if(openClaw.getPosition() != 0.875)
+                {openClaw.setPosition(0.875);}
             }
 
 
             droneState = gamepad2.b;
             if(droneState){
-                launcher.setPosition(0.8);
+                launcher.setPosition(0.5);
             }
 
             double currentAngle;
@@ -96,13 +151,10 @@ public class Drivercontrol extends LinearOpMode {
             while((gamepad2.left_stick_y)>0.1){
                 currentAngle = clawAngle.getPosition();
                 clawAngle.setPosition(currentAngle + 0.00025);
-                }
+            }
             while((gamepad2.left_stick_y)<-0.1){
                 currentAngle = clawAngle.getPosition();
-                if(currentAngle > abortAngle){
-                    clawAngle.setPosition(levelAngle);
-                }
-                else if (currentAngle <= abortAngle){
+                if (currentAngle <= abortAngle){
                     clawAngle.setPosition(currentAngle - 0.00025); //negative equals turning counterclockwise for now
                 }
 
@@ -147,8 +199,6 @@ public class Drivercontrol extends LinearOpMode {
 
             telemetry.addData("precision mode", precisionMode);
             telemetry.addData("current angle", clawAngle.getPosition());
-            telemetry.addData("current angle of open close", openClaw.getPosition());
-            telemetry.addData("current position of the launcher servo", launcher.getPosition());
             telemetry.update();
         }
     }
