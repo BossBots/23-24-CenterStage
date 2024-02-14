@@ -28,8 +28,8 @@ public class AutonBlueRight extends LinearOpMode {
     private double levelAngle = 0.53;
     private double depositAngle = 0.8;
     private Servo openClaw;
-    private double releasePos = 0.875;
-    private double storePix = 0.808;
+    private double releasePos = 0.1;
+    private double storePix = 0.04;
     // Declare computer vision and recognition variable
     private int recognition;
 
@@ -108,10 +108,9 @@ public class AutonBlueRight extends LinearOpMode {
                 mecanum.yaw(-0.1, 15);
             }
             else{                                  //center/default
-                mecanum.forward(0.5, 0, 1300); //move to cv spot
+                mecanum.forward(0.5, 0, 1370); //move to cv spot
                 openClaw.setPosition(releasePos);
                 linearSlideMotor.setTargetPosition(300);
-
                 mecanum.forward(-0.5, 0, 1300); //move back to original
             }
 

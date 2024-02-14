@@ -28,8 +28,8 @@ public class AutonRedLeft extends LinearOpMode {
     private double levelAngle = 0.49;
     private double depositAngle = 0.8;
     private Servo openClaw;
-    private double releasePos = 0.875;
-    private double storePix = 0.808;
+    private double releasePos = 0.1;
+    private double storePix = 0.04;
     // Declare computer vision and recognition variable
     private int recognition;
 
@@ -89,32 +89,35 @@ public class AutonRedLeft extends LinearOpMode {
             //placement variables
             //pushes the purple loaded pixel next to whichever place has a team element, and then moves
             //the robot back to starting position
-            clawAngle.setPosition(storePix);
-            if (elementPositionRecognition == 2){ //left side
-                mecanum.yaw(-0.1, 15);
-                mecanum.forward(0.5, 0, 1300);
-                openClaw.setPosition(releasePos);
-                linearSlideMotor.setTargetPosition(300);
-
-                mecanum.forward(-0.5, 0, 1300);
-                mecanum.yaw(0.1, 15);
-            }
-            else if (elementPositionRecognition == 3){ //right side
-                mecanum.yaw(0.1, 15);
-                mecanum.forward(0.5, 0, 1300);
-                openClaw.setPosition(releasePos);
-                linearSlideMotor.setTargetPosition(300);
-
-                mecanum.forward(-0.5, 0, 1300);
-                mecanum.yaw(-0.1, 15);
-            }
-            else{                                  //center/default
-                mecanum.forward(0.5, 0, 1300); //move to cv spot
-                openClaw.setPosition(releasePos);
-                linearSlideMotor.setTargetPosition(300);
-
-                mecanum.forward(-0.5, 0, 1300); //move back to original
-            }
+//            clawAngle.setPosition(storePix);
+//            mecanum.forward(0.5, 0, 1370); //move to cv spot
+//            openClaw.setPosition(releasePos);
+//            linearSlideMotor.setTargetPosition(300);
+//            mecanum.forward(-0.5, 0, 1300); //move back to original
+//            if (elementPositionRecognition == 2){ //left side
+//                mecanum.yaw(-0.1, 15);
+//                mecanum.forward(0.5, 0, 1300);
+//                openClaw.setPosition(releasePos);
+//                linearSlideMotor.setTargetPosition(300);
+//
+//                mecanum.forward(-0.5, 0, 1300);
+//                mecanum.yaw(0.1, 15);
+//            }
+//            else if (elementPositionRecognition == 3){ //right side
+//                mecanum.yaw(0.1, 15);
+//                mecanum.forward(0.5, 0, 1300);
+//                openClaw.setPosition(releasePos);
+//                linearSlideMotor.setTargetPosition(300);
+//
+//                mecanum.forward(-0.5, 0, 1300);
+//                mecanum.yaw(-0.1, 15);
+//            }
+//            else{                                  //center/default
+//                mecanum.forward(0.5, 0, 1370); //move to cv spot
+//                openClaw.setPosition(releasePos);
+//                linearSlideMotor.setTargetPosition(300);
+//                mecanum.forward(-0.5, 0, 1300); //move back to original
+//            }
 
             // rest of auton
 //            mecanum.drift(0.5, 90, 3900);
