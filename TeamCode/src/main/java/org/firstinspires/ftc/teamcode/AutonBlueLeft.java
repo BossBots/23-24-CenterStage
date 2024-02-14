@@ -18,23 +18,24 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Autonomous
 public class AutonBlueLeft extends LinearOpMode {
 
-    //30 seconds
-    //positive linear value = linear slide goes up
+    // 30 seconds
+    // positive linear value = linear slide goes up
 
     // Declare robot components
     private DcMotor linearSlideMotor;
     private Mecanum mecanum;
     private Servo clawAngle;
+    private Servo openClaw;
 
     private double levelAngle = 0.53;
     private double depositAngle = 0.8;
-    private Servo openClaw;
     private double releasePos = 0.875;
     private double storePix = 0.808;
-    // Declare computer vision and recognition variable
-    private int recognition;
 
     private int elementPositionRecognition = 1;
+
+    // Declare computer vision and recognition variable
+    private int recognition;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -42,7 +43,6 @@ public class AutonBlueLeft extends LinearOpMode {
         //intialize imu
         IMU imu;
         imu = hardwareMap.get(IMU.class, "imu");
-
 
         // Initialize Mecanum drivetrain
         mecanum = new Mecanum(
@@ -81,18 +81,15 @@ public class AutonBlueLeft extends LinearOpMode {
         //claw.setPosition(0.3);
 
         if (opModeIsActive()) {
-            //robot is placed on side wall, right next to the center poles
-            // team prop randomly placed on left, center, right, - right in front of robot
-            // PURPLE pixel loaded onto front of robot scoop
-            // YELLOW pixel loaded onto robot claw
-
-            //computer vision initialization simulation for now
-            //placement variables
-            //pushes the purple loaded pixel next to whichever place has a team element, and then moves
-            //the robot back to starting position
             linearSlideMotor.setPower(0.1);
-            clawAngle.setPosition(storePix);
-            if (elementPositionRecognition == 2){ //left side
+            clawAngle.setPosition(storePix); // closed
+            if (elementPositionRecognition == 1) { // middle
+                mecanum.forward(0.5, 0, 1300); // move to cv spot
+                openClaw.setPosition(releasePos); // release
+                linearSlideMotor.setTargetPosition(300);
+                mecanum.forward(-0.5, 0, 1300); // move back to original spot
+            }
+            else if (elementPositionRecognition == 2) { // left
                 mecanum.yaw(-0.1, 15);
                 mecanum.forward(0.5, 0, 1300);
                 openClaw.setPosition(releasePos);
@@ -101,121 +98,20 @@ public class AutonBlueLeft extends LinearOpMode {
                 mecanum.forward(-0.5, 0, 1300);
                 mecanum.yaw(0.1, 15);
             }
-            else if (elementPositionRecognition == 3){ //right side
+            else if (elementPositionRecognition == 3) { // right
                 mecanum.yaw(0.1, 15);
                 mecanum.forward(0.5, 0, 1300);
+
                 openClaw.setPosition(releasePos);
+
                 linearSlideMotor.setTargetPosition(300);
 
                 mecanum.forward(-0.5, 0, 1300);
                 mecanum.yaw(-0.1, 15);
             }
-            else{                                  //center/default
-                mecanum.forward(0.5, 0, 1300); //move to cv spot
-                openClaw.setPosition(releasePos);
-                linearSlideMotor.setTargetPosition(300);
-                mecanum.forward(-0.5, 0, 1300); //move back to original
-            }
-
-//            // rest of auton
-//            mecanum.drift(-0.5, 90, 1300);
-//            mecanum.forward(0.5, 0, 1300);
-//            mecanum.yaw(-0.5, 90);
-//            mecanum.forward(0.3, 0, 1000);
-//
-//            //lift clawAngle and open
-//            linearSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            linearSlideMotor.setTargetPosition(1500);
-//            clawAngle.setPosition(depositAngle);
-//            openClaw.setPosition(releasePos); //
-//            while (linearSlideMotor.isBusy()){
-//                idle();
-//            }
-//            linearSlideMotor.setPower(0);
-//            linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//
-//            //linear slide goes down
-//
-//            //go to parking
-//
-//            linearSlideMotor.setTargetPosition(-1500);
-//            mecanum.drift(-0.5, 90, 100);
-//            mecanum.forward(0.5, 0, 100);
-
-
-
-
-            // moves robot to loading place for pixel
-//            mecanum.forward(-0.1, 0, 200);
-//            claw.setPosition(collectPos);
-//            linearSlideMotor.setTargetPosition(-100);
-//            linearSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            linearSlideMotor.setPower(-0.2);
-
-            // move right a little
-            //mecanum.drive(0, 90, 500);
-
-            // go straight a lot
-            //mecanum.forward(0.1, 0, 1500);
-
-            // go left a little
-            //mecanum.drive(0, -90, 500);
-
-            // use prop as an indicator and drop yellow pixel onto backdrop
-            // assuming we have a method to drop the yellow pixel, call it here
-            // dropPixel() ?
-
-            // go right a little
-            //mecanum.drive(0, 90, 200);
-
-            // go backward a lot
-            //mecanum.forward(-0.2, 180, 200);
-
-            // go left a little
-            //mecanum.drive(0, -90, 500);
-
-            // pick up purple pixel
-            //linearSlideMotor.setTargetPosition(-3500);
-
-            // pick up yellow pixel
-            // assuming we have a method to pick up the yellow pixel, call it here
-            // pickUpPixel() ?
-
-            // drop purple pixel on the line
-            //claw.setPosition(releasePos);
-
-            // go right a little
-            //mecanum.drive(0, 90, 500);
-
-            // go straight a lot
-            //mecanum.forward(0.2, 0, 1500);
-
-            // go left a little
-            //mecanum.drive(0, -90, 500);
-
-            // match and drop yellow pixel on the backdrop
-            // assuming you have a method to drop the yellow pixel, call it here
-            // dropPixel() ?
-
-            // park (backstage)
-            // assuming we have a method to park, call it here
         }
     }
 }
-
-// change the code to implement the changes you mentioned professionally.
-
-/**
- * Steps
- *
- * 1. put purple pixel next to prop
- * 2. take yellow pixel to backdrop (use prop as indicator)
- * 3. come back
- * 4. pick up purple pixel, then yellow pixel
- * 5. drop purple pixel on line
- * 6. drop yellow pixel on backdrop (matched)
- * 7. park (backstage)
- */
 
 /**
  * Cheatsheet

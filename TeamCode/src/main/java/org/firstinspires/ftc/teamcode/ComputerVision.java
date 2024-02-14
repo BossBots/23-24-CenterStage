@@ -106,7 +106,6 @@ public class ComputerVision {
     public int[][] getRGB() {return avgRGB;}
 
     class Pipeline extends OpenCvPipeline {
-
         private boolean viewportPaused = false;
         private Mat YCrCb = new Mat();
         private Mat Cb = new Mat();
@@ -126,7 +125,6 @@ public class ComputerVision {
                         new Point(firstFrame.cols() * botRight[i][0], firstFrame.rows() * botRight[i][1])
                 ));
             }
-
         }
 
         @Override

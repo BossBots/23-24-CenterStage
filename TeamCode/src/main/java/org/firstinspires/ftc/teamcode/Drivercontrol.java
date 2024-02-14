@@ -18,10 +18,8 @@ public class Drivercontrol extends LinearOpMode {
 
     private Servo launcher;
     //private Servo joint;
-//    private boolean oldState = false;
     private boolean currentState;
     private boolean droneState;
-//    private boolean clawAction = false;
     private boolean oldState = false;
     private boolean newState;
     private boolean precisionMode = false;
